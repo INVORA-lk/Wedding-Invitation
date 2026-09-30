@@ -1,0 +1,107 @@
+:root {
+  /* Sri Lankan Royal Palette */
+  --color-bg-page: #192017;
+  --color-bg-card: #fefdfa;
+  --color-bg-card-alt: #f8f5ee;
+  
+  --color-gold: #cba135;
+  --color-gold-bright: #e5be58;
+  --color-gold-deep: #a88120;
+  --color-gold-light: #f7eed3;
+  --color-gold-border: #e6d3a3;
+  
+  --color-maroon: #7e1227;
+  --color-maroon-dark: #580a19;
+  --color-maroon-light: #fbebed;
+  
+  --color-royal-blue: #14325c;
+  --color-emerald: #1c4528;
+  --color-emerald-light: #e6efe8;
+  
+  --color-text-dark: #221e19;
+  --color-text-muted: #5e564d;
+  --color-text-light: #8e8578;
+  --color-border: #ebdcc0;
+
+  --font-script: 'Alex Brush', 'Great Vibes', cursive;
+  --font-serif: 'Cormorant Garamond', 'Cinzel', serif;
+  --font-heading: 'Cinzel', serif;
+  --font-sans: 'Montserrat', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --font-sinhala: 'Noto Serif Sinhala', serif;
+
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 8px 24px rgba(44, 38, 28, 0.08);
+  --shadow-lg: 0 16px 40px rgba(25, 20, 12, 0.16);
+  --shadow-phone: 0 25px 60px -15px rgba(10, 14, 8, 0.65), 0 0 0 1px rgba(212, 175, 55, 0.25);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-bg-page);
+  color: var(--color-text-dark);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.6;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+input, textarea, select {
+  font-family: inherit;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulseGold {
+  0%, 100% { transform: scale(1); box-shadow: 0 0 0 rgba(212, 175, 55, 0); }
+  50% { transform: scale(1.03); box-shadow: 0 0 16px rgba(212, 175, 55, 0.4); }
+}
+
+@keyframes floatJasmine {
+  0% {
+    transform: translate(0, -20px) rotate(0deg) scale(0.8);
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.8;
+  }
+  85% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: translate(80px, 100vh) rotate(360deg) scale(1.1);
+    opacity: 0;
+  }
+}
+
+/* Custom scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.2);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-gold);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-gold-deep);
+}
