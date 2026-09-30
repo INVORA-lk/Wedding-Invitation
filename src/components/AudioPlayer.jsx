@@ -3,24 +3,30 @@ import { Volume2, VolumeX, Music, Settings2, Upload, ChevronUp } from 'lucide-re
 
 export default function AudioPlayer() {
   const [isPlaying, setIsPlaying] = useState(false);
-  const [currentTrack, setCurrentTrack] = useState('piano');
+  const [currentTrack, setCurrentTrack] = useState('canon');
   const [customTrackName, setCustomTrackName] = useState('');
   const [showSettings, setShowSettings] = useState(false);
   const [volume, setVolume] = useState(0.7);
 
   const audioRef = useRef(null);
   const fileInputRef = useRef(null);
+  const touchTimerRef = useRef(null);
 
   const tracks = {
-    piano: {
-      name: 'Classical Wedding Piano (Canon in D)',
-      sub: 'Romantic Grand Piano',
-      src: '/assets/wedding_piano.wav',
+    canon: {
+      name: 'Pachelbel — Canon in D',
+      sub: 'Romantic Orchestral Masterpiece',
+      src: '/assets/wedding_piano.mp3',
     },
-    flute: {
-      name: 'Traditional Flute (Mangala Geetha)',
-      sub: 'Auspicious Sri Lankan Raga',
-      src: '/assets/sri_lankan_flute.wav',
+    air: {
+      name: 'Bach — Air on the G String',
+      sub: 'Warm Royal Strings & Harmony',
+      src: '/assets/bach_air.mp3',
+    },
+    march: {
+      name: 'Mendelssohn — Wedding March',
+      sub: 'Auspicious Grand Celebration',
+      src: '/assets/wedding_march.mp3',
     }
   };
 
@@ -28,7 +34,7 @@ export default function AudioPlayer() {
     if (currentTrack === 'custom' && customTrackName) {
       return audioRef.current?.src || '';
     }
-    return tracks[currentTrack]?.src || tracks.piano.src;
+    return tracks[currentTrack]?.src || tracks.canon.src;
   };
 
   const togglePlay = () => {
@@ -53,9 +59,9 @@ export default function AudioPlayer() {
     if (audioRef.current) {
       audioRef.current.src = tracks[trackKey].src;
       audioRef.current.load();
-      if (isPlaying) {
-        audioRef.current.play().catch(() => {});
-      }
+      audioRef.current.play().then(() => {
+        setIsPlaying(true);
+      }).catch(() => {});
     }
   };
 
@@ -76,6 +82,18 @@ export default function AudioPlayer() {
     }
   };
 
+  const handleTouchStart = () => {
+    touchTimerRef.current = setTimeout(() => {
+      setShowSettings(true);
+    }, 600);
+  };
+
+  const handleTouchEnd = () => {
+    if (touchTimerRef.current) {
+      clearTimeout(touchTimerRef.current);
+    }
+  };
+
   const handleVolumeChange = (e) => {
     const val = parseFloat(e.target.value);
     setVolume(val);
@@ -89,10 +107,6 @@ export default function AudioPlayer() {
       audioRef.current.volume = volume;
     }
   }, [volume]);
-
-  const activeTitle = currentTrack === 'custom' 
-    ? (customTrackName || 'Custom Upload') 
-    : (tracks[currentTrack]?.name || 'Wedding Music');
 
   return (
     <div className="audio-player-widget">
@@ -120,24 +134,35 @@ export default function AudioPlayer() {
 
           <div className="audio-track-options">
             <button 
-              className={`track-option-btn ${currentTrack === 'piano' ? 'active' : ''}`}
-              onClick={() => selectTrack('piano')}
+              className={`track-option-btn ${currentTrack === 'canon' ? 'active' : ''}`}
+              onClick={() => selectTrack('canon')}
             >
-              <div className="track-icon">🎹</div>
+              <div className="track-icon">🎻</div>
               <div className="track-info">
-                <span className="track-title">{tracks.piano.name}</span>
-                <span className="track-sub">{tracks.piano.sub}</span>
+                <span className="track-title">{tracks.canon.name}</span>
+                <span className="track-sub">{tracks.canon.sub}</span>
               </div>
             </button>
 
             <button 
-              className={`track-option-btn ${currentTrack === 'flute' ? 'active' : ''}`}
-              onClick={() => selectTrack('flute')}
+              className={`track-option-btn ${currentTrack === 'air' ? 'active' : ''}`}
+              onClick={() => selectTrack('air')}
             >
-              <div className="track-icon">🪈</div>
+              <div className="track-icon">🎼</div>
               <div className="track-info">
-                <span className="track-title">{tracks.flute.name}</span>
-                <span className="track-sub">{tracks.flute.sub}</span>
+                <span className="track-title">{tracks.air.name}</span>
+                <span className="track-sub">{tracks.air.sub}</span>
+              </div>
+            </button>
+
+            <button 
+              className={`track-option-btn ${currentTrack === 'march' ? 'active' : ''}`}
+              onClick={() => selectTrack('march')}
+            >
+              <div className="track-icon">👑</div>
+              <div className="track-info">
+                <span className="track-title">{tracks.march.name}</span>
+                <span className="track-sub">{tracks.march.sub}</span>
               </div>
             </button>
 
@@ -152,7 +177,7 @@ export default function AudioPlayer() {
                 <span className="track-title">
                   {customTrackName ? `Custom: ${customTrackName}` : 'Upload Your Favorite Song (MP3)'}
                 </span>
-                <span className="track-sub">Choose any music from your device</span>
+                <span className="track-sub">Choose any music file from your device</span>
               </div>
             </button>
             <input 
@@ -179,38 +204,31 @@ export default function AudioPlayer() {
         </div>
       )}
 
-      {/* Main Floating Pill Button */}
-      <div className="audio-pill-cluster">
-        <button 
-          className={`audio-btn ${isPlaying ? 'playing' : ''}`}
-          onClick={togglePlay}
-          title={isPlaying ? "Pause wedding music" : "Play romantic wedding music"}
-          aria-label="Wedding Music"
-        >
-          <div className="audio-icon-wrap">
-            {isPlaying ? <Volume2 size={18} /> : <Music size={18} />}
-          </div>
-          
-          <div className="audio-bars" aria-hidden="true">
-            <span className="bar bar1"></span>
-            <span className="bar bar2"></span>
-            <span className="bar bar3"></span>
-          </div>
-
-          <span className="audio-label">
-            {isPlaying ? 'Wedding Music' : 'Play Music'}
-          </span>
-        </button>
-
-        <button 
-          className="audio-settings-trigger"
-          onClick={() => setShowSettings(!showSettings)}
-          title="Change wedding track or upload MP3"
-          aria-label="Audio settings"
-        >
-          <Settings2 size={16} />
-        </button>
-      </div>
+      {/* Floating Single Corner Icon Button */}
+      <button 
+        className={`audio-corner-btn ${isPlaying ? 'playing' : 'paused'}`}
+        onClick={togglePlay}
+        onContextMenu={(e) => {
+          e.preventDefault();
+          setShowSettings(!showSettings);
+        }}
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
+        title={isPlaying ? "Pause Wedding Music (Right-click or press & hold for options)" : "Play Wedding Music (Right-click or press & hold for options)"}
+        aria-label={isPlaying ? "Pause wedding music" : "Play wedding music"}
+      >
+        {isPlaying && <span className="audio-pulse-ring" aria-hidden="true" />}
+        <div className="audio-corner-icon">
+          {isPlaying ? (
+            <Music size={22} className="music-svg-active" />
+          ) : (
+            <div className="music-paused-container">
+              <Music size={22} className="music-svg-muted" />
+              <span className="music-slash-strike" aria-hidden="true" />
+            </div>
+          )}
+        </div>
+      </button>
     </div>
   );
 }

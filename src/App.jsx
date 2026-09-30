@@ -9,16 +9,16 @@ import RsvpModal from './components/RsvpModal';
 import LotusEmblem from './components/LotusEmblem';
 import HeroCoupleArt from './components/HeroCoupleArt';
 import GoingAwayCouple from './components/GoingAwayCouple';
-import { 
-  Sparkles, 
-  Flame, 
-  UtensilsCrossed, 
-  PartyPopper, 
-  Clock, 
-  Ticket, 
-  Gift, 
-  Mail, 
-  PhoneCall, 
+import {
+  Sparkles,
+  Flame,
+  UtensilsCrossed,
+  PartyPopper,
+  Clock,
+  Ticket,
+  Gift,
+  Mail,
+  PhoneCall,
   MousePointerClick,
   Pencil,
   Check,
@@ -68,7 +68,7 @@ function App() {
       {/* Main Wedding Invitation Card */}
       <div className="invitation-outer-wrap">
         <main className="invitation-card royal-sri-lankan">
-          
+
           {/* SECTION 1: HEADER WITH TRANSPARENT GOLD LOTUS ICON & BLESSING */}
           <section className="inv-section header-section">
             <div className="lotus-emblem-top">
@@ -162,8 +162,8 @@ function App() {
               <p className="event-venue">CINNAMON GRAND COLOMBO</p>
               <p className="event-address">The Grand Ballroom • 77 Galle Road</p>
               <p className="event-city">Colombo 03, Sri Lanka</p>
-              
-              <button 
+
+              <button
                 className="action-btn-olive"
                 onClick={() => openMap('poruwa')}
               >
@@ -180,8 +180,8 @@ function App() {
               <p className="event-venue">THE KINGSBURY COLOMBO</p>
               <p className="event-address">The Balmoral Hall • 48 Janadhipathi Mawatha</p>
               <p className="event-city">Colombo 01, Sri Lanka</p>
-              
-              <button 
+
+              <button
                 className="action-btn-olive"
                 onClick={() => openMap('reception')}
               >
@@ -195,10 +195,10 @@ function App() {
           <section className="inv-section itinerary-section">
             <h3 className="itinerary-main-title">ITINERARY OF CEREMONIES</h3>
             <p className="itinerary-sinhala-title">චාරිත්‍ර පෙළගැස්ම</p>
-            
+
             <div className="itinerary-card-torn royal-gold-card">
               <div className="itinerary-water-bg"></div>
-              
+
               <div className="timeline-container">
                 <div className="timeline-spine"></div>
 
@@ -319,8 +319,8 @@ function App() {
                       if (e.key === 'Enter') setIsEditingGuest(false);
                     }}
                   />
-                  <button 
-                    className="guest-name-save-btn" 
+                  <button
+                    className="guest-name-save-btn"
                     onClick={() => setIsEditingGuest(false)}
                     title="Save Name"
                   >
@@ -333,7 +333,7 @@ function App() {
                   <h3 className="invited-guest-name">
                     {guestName || 'Honored Guest & Family'}
                   </h3>
-                  <button 
+                  <button
                     className="guest-name-edit-btn"
                     onClick={() => setIsEditingGuest(true)}
                     title="Tap to personalize guest name"
@@ -353,9 +353,9 @@ function App() {
 
               <div className="passes-badge-row">
                 <span className="para-ti">FOR YOU</span>
-                <div 
-                  className="passes-number-box" 
-                  onClick={() => setGuestCount((g) => (g >= 6 ? 1 : g + 1))} 
+                <div
+                  className="passes-number-box"
+                  onClick={() => setGuestCount((g) => (g >= 6 ? 1 : g + 1))}
                   title="Click to toggle guest count"
                 >
                   {guestCount}
@@ -384,8 +384,8 @@ function App() {
               CONTRIBUTIONS TOWARD OUR NEW HOME ARE CHERISHED.
             </p>
             <p className="gift-bold-label">WISH BOX &amp; DIGITAL BLESSING</p>
-            
-            <button 
+
+            <button
               className="gift-envelope-btn"
               onClick={() => setGiftOpen(true)}
               title="View bank details and gift info"
@@ -412,7 +412,7 @@ function App() {
               ON OR BEFORE NOVEMBER 01, 2026
             </p>
 
-            <button 
+            <button
               className="action-btn-olive rsvp-large-btn"
               onClick={() => setRsvpOpen(true)}
             >
@@ -460,22 +460,45 @@ function App() {
             </div>
           </section>
 
+          {/* FOOTER CREDITS */}
+          <footer className="invitation-brand-footer">
+            <div className="brand-footer-inner">
+              <div className="brand-divider">
+                <span className="brand-line"></span>
+                <span className="brand-lotus-icon">🪷</span>
+                <span className="brand-line"></span>
+              </div>
+              <p className="brand-credit-text">
+                Made by{' '}
+                <a
+                  href="https://invora.lk"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="brand-link-highlight"
+                >
+                  INVORA.lk
+                </a>
+              </p>
+              <span className="brand-subtext">BESPOKE DIGITAL WEDDING EXPERIENCES</span>
+            </div>
+          </footer>
+
         </main>
       </div>
 
       {/* Interactive Modals */}
-      <MapModal 
+      <MapModal
         isOpen={mapOpen}
         onClose={() => setMapOpen(false)}
         initialLocation={mapLocation}
       />
 
-      <GiftModal 
+      <GiftModal
         isOpen={giftOpen}
         onClose={() => setGiftOpen(false)}
       />
 
-      <RsvpModal 
+      <RsvpModal
         isOpen={rsvpOpen}
         onClose={() => setRsvpOpen(false)}
         defaultPasses={guestCount}

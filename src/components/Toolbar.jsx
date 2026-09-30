@@ -1,14 +1,14 @@
 import React from 'react';
 import { Smartphone, Monitor, CheckCircle, Gift, MapPin } from 'lucide-react';
 
-export default function Toolbar({ 
-  viewMode, 
-  setViewMode, 
-  onOpenRsvp, 
-  onOpenGift, 
+export default function Toolbar({
+  viewMode,
+  setViewMode,
+  onOpenRsvp,
+  onOpenGift,
   onOpenMap,
   guestCount,
-  setGuestCount 
+  setGuestCount
 }) {
   return (
     <header className="top-toolbar">
@@ -19,7 +19,7 @@ export default function Toolbar({
 
       <div className="toolbar-center-controls">
         <div className="view-mode-pill">
-          <button 
+          <button
             className={`pill-btn ${viewMode === 'mobile' ? 'active' : ''}`}
             onClick={() => setViewMode('mobile')}
             title="Mobile Phone View"
@@ -27,7 +27,7 @@ export default function Toolbar({
             <Smartphone size={15} />
             <span>Mobile</span>
           </button>
-          <button 
+          <button
             className={`pill-btn ${viewMode === 'desktop' ? 'active' : ''}`}
             onClick={() => setViewMode('desktop')}
             title="Full Screen View"
@@ -39,9 +39,9 @@ export default function Toolbar({
 
         <div className="passes-quick-select" title="Simulate assigned seats">
           <label htmlFor="toolbar-passes">Seats:</label>
-          <select 
-            id="toolbar-passes" 
-            value={guestCount} 
+          <select
+            id="toolbar-passes"
+            value={guestCount}
             onChange={(e) => setGuestCount(Number(e.target.value))}
             className="toolbar-select"
           >
